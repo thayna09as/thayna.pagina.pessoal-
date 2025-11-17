@@ -22,8 +22,8 @@ async function onConfigChange(newConfig) {
         titleElement.textContent = config.page_title || defaultConfig.page_title;
     }
     
-    // O elemento 'welcome-message' não existe no HTML original, mas o código mantém a lógica para caso ele seja adicionado.
-    const welcomeElement = document.getElementById('welcome-message'); 
+    // Atualizar mensagem de boas-vindas
+    const welcomeElement = document.getElementById('welcome-message');
     if (welcomeElement) {
         welcomeElement.textContent = config.welcome_message || defaultConfig.welcome_message;
     }
@@ -74,8 +74,7 @@ if (window.elementSdk) {
         mapToCapabilities,
         mapToEditPanelValues
     });
-    // A configuração inicial é carregada pelo SDK ou usa o padrão
-    config = window.elementSdk.config || defaultConfig; 
+    config = window.elementSdk.config;
 }
 
 // Funções do menu
@@ -104,7 +103,6 @@ function showSection(sectionId) {
     });
 
     // Encontrar e ativar o item do menu correspondente
-    // Nota: A seleção por 'onclick' é menos robusta; uma melhoria seria usar 'data-section-id'
     const activeMenuItem = document.querySelector(`[onclick="showSection('${sectionId}')"]`);
     if (activeMenuItem) {
         activeMenuItem.classList.add('active');
@@ -122,8 +120,7 @@ document.addEventListener('click', function(event) {
     const sidebar = document.getElementById('sidebar');
     const menuToggle = document.querySelector('.menu-toggle');
     
-    // Verifica se o clique não foi na barra lateral nem no botão de alternar
-    if (sidebar && menuToggle && !sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
+    if (!sidebar.contains(event.target) && !menuToggle.contains(event.target)) {
         sidebar.classList.remove('open');
     }
 });
@@ -134,7 +131,6 @@ function updateCarousel() {
     const dots = document.querySelectorAll('.carousel-dot');
     
     if (carousel) {
-        // move o carrossel na horizontal
         carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
     }
     
@@ -161,9 +157,5 @@ function currentSlideFunc(n) {
 // Auto-play do carrossel
 setInterval(nextSlide, 4000);
 
-// Aplicar configuração inicial no carregamento da página
-// Garante que o estado inicial da página reflete as configurações
-document.addEventListener('DOMContentLoaded', () => {
-    onConfigChange(config);
-    updateCarousel(); // Inicializa a posição do carrossel e os indicadores
-});
+// Aplicar configuração inicial
+onConfigChange(config);

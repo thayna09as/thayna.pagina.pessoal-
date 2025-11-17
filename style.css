@@ -26,11 +26,11 @@ html {
     position: fixed;
     height: 100%;
     z-index: 1000;
-    transform: translateX(-200px); /* Oculta a maior parte do menu */
+    transform: translateX(-200px);
 }
 
 .sidebar.open {
-    transform: translateX(0); /* Mostra o menu */
+    transform: translateX(0);
 }
 
 .menu-toggle {
@@ -95,20 +95,21 @@ html {
 /* Conteúdo Principal */
 .main-content {
     flex: 1;
-    margin-left: 0; /* Começa com margin 0 e pode ser ajustado com JS para desktop */
+    margin-left: 0;
     padding: 80px 40px 40px;
     transition: margin-left 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
 }
-
-/* Para manter o layout em desktop quando o menu estiver "fechado" (parcialmente oculto),
-   mas evitar que o conteúdo suma quando o menu está completamente fechado em mobile,
-   usamos a margem 0 e confiamos no padding e no z-index para que o conteúdo não fique
-   atrás do menu toggle. O margin-left só seria necessário se o menu estivesse sempre visível.
-*/
 
 .content-section {
     display: none;
     animation: fadeIn 0.5s ease;
+    width: 100%;
 }
 
 .content-section.active {
